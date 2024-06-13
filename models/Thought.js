@@ -1,15 +1,35 @@
-
 const mongoose = require('mongoose');
 
-const ThoughtSchema = new mongoose.Schema({
-  thoughtText: { type: String, required: true },
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  reactions: [{
-    reactionBody: { type: String, required: true },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    createdAt: { type: Date, default: Date.now }
-  }],
-  createdAt: { type: Date, default: Date.now }
+const reactionSchema = new mongoose.Schema({
+  reactionBody: {
+    type: String,
+    required: true,
+  },
+  username: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
-module.exports = mongoose.model('Thought', ThoughtSchema);
+const thoughtSchema = new mongoose.Schema({
+  thoughtText: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  username: {
+    type: String,
+    required: true,
+  },
+  reactions: [reactionSchema],
+});
+
+const Thought = mongoose.model('Thought', thoughtSchema);
+module.exports = Thought;
