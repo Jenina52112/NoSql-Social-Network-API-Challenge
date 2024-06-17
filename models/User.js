@@ -31,11 +31,32 @@ const userSchema = new mongoose.Schema({
 });
 
 //Add virtual for friend count
+// userSchema.virtual('friendCount').get(function() {
+//   return this.friends.length;
+// });
+
 userSchema.virtual('friendCount').get(function() {
   return this.friends.length;
 });
 
+// Set the toJSON option
+userSchema.set('toJSON', {
+  virtuals: true,
+  versionKey: false, // Removes the __v field
+  transform: (doc, ret) => {
+    delete ret.__v;
+    return ret;
+  },
+});
 
+userSchema.set('toObject', {
+  virtuals: true,
+  versionKey: false, // Removes the __v field
+  transform: (doc, ret) => {
+    delete ret.__v;
+    return ret;
+  },
+});
 
 // Pre hook to remove associated thoughts when a user is deleted
 userSchema.pre('findOneAndDelete', async function(next) {

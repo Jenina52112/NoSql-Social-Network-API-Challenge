@@ -19,6 +19,11 @@ const reactionSchema = new mongoose.Schema({
     default: Date.now,
     get: (timestamp) => new Date(timestamp).toLocaleString(),
   },
+  username: {
+    type: String,
+    required: true,
+  },
+
 });
 
 const thoughtSchema = new mongoose.Schema({
@@ -65,6 +70,13 @@ thoughtSchema.set('toObject', {
   },
 });
 
+// reactionSchema.find({}).select('-_id reactionId reactionBody username createdAt')
+//   .then(data => {
+//     res.json(data);
+//   })
+//   .catch(err => {
+//     res.json(err);
+//   });
 
 const Thought = mongoose.model('Thought', thoughtSchema);
 module.exports = Thought;
