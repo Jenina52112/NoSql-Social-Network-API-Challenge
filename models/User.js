@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Thought = require('./Thought');
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -31,12 +32,25 @@ const userSchema = new mongoose.Schema({
 
 //Add virtual for friend count
 userSchema.virtual('friendCount').get(function() {
-  return this.friens.length;
+  return this.friends.length;
 });
 
-//Ensure virtual fields are serialized
-userSchema.set('toJSON', { virtuals: true });
-userSchema.set('toObject', { virtuals: true });
+
+
+// Pre hook to remove associated thoughts when a user is deleted
+userSchema.pre('findOneAndDelete', async function(next) {
+  try {
+    const user = await this.model.findOne(this.getQuery());
+    console.log(`Deleting thoughts for user: ${user.username}`);
+    const result = await Thought.deleteMany({ username: user.username });
+    console.log(`Deleted ${result.deletedCount} thoughts.`);
+    next();
+  } catch (err) {
+    console.error('Error deleting thoughts:', err);
+    next(err);
+  }
+});
+
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;

@@ -17,7 +17,7 @@ const reactionSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now,
-    get: (timestamp) => moment(timestamp).format('YYYY-MM-DD HH:mm:ss'),
+    get: (timestamp) => new Date(timestamp).toLocaleString(),
   },
 });
 
@@ -41,9 +41,30 @@ const thoughtSchema = new mongoose.Schema({
 });
 
 
-// Ensure virtual fields are serialized
-thoughtSchema.set('toJSON', { getters: true, virtuals: true });
-thoughtSchema.set('toObject', { getters: true, virtuals: true });
+//virtual for reaction count
+thoughtSchema.virtual('reactionCount').get(function() {
+  return this.reactions.length;
+});
+
+// Set the toJSON option
+thoughtSchema.set('toJSON', {
+  virtuals: true,
+  versionKey: false, // Removes the __v field
+  transform: (doc, ret) => {
+    delete ret.__v;
+    return ret;
+  },
+});
+
+thoughtSchema.set('toObject', {
+  virtuals: true,
+  versionKey: false, // Removes the __v field
+  transform: (doc, ret) => {
+    delete ret.__v;
+    return ret;
+  },
+});
+
 
 const Thought = mongoose.model('Thought', thoughtSchema);
 module.exports = Thought;
