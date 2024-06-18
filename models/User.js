@@ -39,7 +39,28 @@ userSchema.set('toJSON', {
   virtuals: true,
   versionKey: false, // Removes the __v field
   transform: (doc, ret) => {
+    // Remove the __v field
     delete ret.__v;
+
+    // Iterate through thoughts and remove the 'id' field from reactions
+    if (ret.thoughts) {
+      ret.thoughts.forEach(thought => {
+        if (thought.reactions) {
+          thought.reactions.forEach(reaction => {
+            delete reaction.id;
+          });
+        }
+        delete thought.id; // Remove the 'id' field from thought itself
+      });
+    }
+
+    // Remove 'id' field from friends
+    if (ret.friends) {
+      ret.friends.forEach(friend => {
+        delete friend.id;
+      });
+    }
+
     return ret;
   },
 });
@@ -48,7 +69,28 @@ userSchema.set('toObject', {
   virtuals: true,
   versionKey: false, // Removes the __v field
   transform: (doc, ret) => {
+    // Remove the __v field
     delete ret.__v;
+
+    // Iterate through thoughts and remove the 'id' field from reactions
+    if (ret.thoughts) {
+      ret.thoughts.forEach(thought => {
+        if (thought.reactions) {
+          thought.reactions.forEach(reaction => {
+            delete reaction.id;
+          });
+        }
+        delete thought.id; // Remove the 'id' field from thought itself
+      });
+    }
+
+    // Remove 'id' field from friends
+    if (ret.friends) {
+      ret.friends.forEach(friend => {
+        delete friend.id;
+      });
+    }
+
     return ret;
   },
 });
