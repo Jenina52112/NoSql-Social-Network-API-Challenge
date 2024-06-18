@@ -1,5 +1,9 @@
 
-# NoSql Social Network API    
+# NoSql Social Network API
+
+# [WATCH WALKTHROUGH VIDEO HERE!!!](https://youtu.be/8-RdTYJd0i0)
+
+<img src="./image.png" style="display: block; margin: 0 auto; width: 1200px; height: 800px">
 
 ## Table of Contents
 - [Description](#description)
@@ -12,7 +16,7 @@
 
 
 ## Description
-This project is about a social network web application where users can share their thoughts, react to friends’ thoughts, and create a friend list. It was done using Express.js for routing, a MongoDB database, and the Mongoose ODM
+This project is about a social network web application where users can share their thoughts, react to friends’ thoughts, and create a friend list. It was done using Express.js for routing, a MongoDB database, and the Mongoose ODM.
 
 ## Installation
 To install the application, navigate to the repository entitled: NoSql-Social-Network-API-Challenge. Once navigated, install necessary dependencies.
