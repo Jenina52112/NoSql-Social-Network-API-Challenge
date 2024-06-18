@@ -30,11 +30,6 @@ const userSchema = new mongoose.Schema({
   ],
 });
 
-//Add virtual for friend count
-// userSchema.virtual('friendCount').get(function() {
-//   return this.friends.length;
-// });
-
 userSchema.virtual('friendCount').get(function() {
   return this.friends.length;
 });
@@ -71,7 +66,6 @@ userSchema.pre('findOneAndDelete', async function(next) {
     next(err);
   }
 });
-
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;

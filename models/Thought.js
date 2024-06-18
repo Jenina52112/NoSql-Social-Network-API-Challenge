@@ -23,7 +23,6 @@ const reactionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-
 });
 
 const thoughtSchema = new mongoose.Schema({
@@ -44,7 +43,6 @@ const thoughtSchema = new mongoose.Schema({
   },
   reactions: [reactionSchema],
 });
-
 
 //virtual for reaction count
 thoughtSchema.virtual('reactionCount').get(function() {
@@ -69,14 +67,6 @@ thoughtSchema.set('toObject', {
     return ret;
   },
 });
-
-// reactionSchema.find({}).select('-_id reactionId reactionBody username createdAt')
-//   .then(data => {
-//     res.json(data);
-//   })
-//   .catch(err => {
-//     res.json(err);
-//   });
 
 const Thought = mongoose.model('Thought', thoughtSchema);
 module.exports = Thought;
